@@ -367,3 +367,174 @@ body {
     color: #7f8c8d;
     padding: 20px;
 }
+
+/* Общие стили для админ-панели и страницы создания */
+.content {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.title {
+    margin-bottom: 40px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #eee;
+}
+
+.title h1 {
+    font-size: 2.5rem;
+    color: #2c3e50;
+}
+
+/* Стили для управления пользователями */
+.users-list {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 40px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.user-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.user-item:last-child {
+    border-bottom: none;
+}
+
+.user-item span {
+    font-size: 1.1rem;
+    color: #2c3e50;
+}
+
+/* Стили для списка постов */
+.posts-list {
+    margin-top: 40px;
+}
+
+.product {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.product h3 {
+    margin: 0 0 15px 0;
+    color: #2c3e50;
+    font-size: 1.4rem;
+}
+
+.post-meta {
+    display: flex;
+    gap: 20px;
+    color: #7f8c8d;
+    margin-bottom: 15px;
+}
+
+.admin-controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+/* Стили для кнопок */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.btn-delete {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.btn-delete:hover {
+    background-color: #c0392b;
+}
+
+.btn i {
+    font-size: 1rem;
+}
+
+/* Стили для формы создания поста */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.form-group textarea {
+    min-height: 200px;
+    resize: vertical;
+}
+
+.form-group small {
+    display: block;
+    margin-top: 5px;
+    color: #7f8c8d;
+}
+
+/* Стили для секций */
+.section {
+    margin-bottom: 40px;
+}
+
+.section-title {
+    font-size: 1.8rem;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #eee;
+}
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .content {
+        padding: 15px;
+    }
+    
+    .user-item {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    
+    .admin-controls {
+        flex-direction: column;
+    }
+    
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}

@@ -19,8 +19,8 @@
                             <li><a href="{{ url_for('admin') }}"><i class="fas fa-user-shield"></i> Admin Panel</a></li>
                             <li><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                             {% if request.endpoint == 'index' %}
-                                <li><a href="{{ url_for('admin') }}" class="create-post-btn"><i class="fas fa-plus"></i> Create Post</a></li>
-                                <li class="search-container">
+                            <li><a href="{{ url_for('create_page') }}" class="create-post-btn"><i class="fas fa-plus"></i> Create Post</a></li>
+                            <li class="search-container">
                                     <form action="{{ url_for('process') }}" method="post" class="search-form">
                                         <input type="text" name="search_query" placeholder="Search..." required>
                                         <button type="submit"><i class="fas fa-search"></i></button>

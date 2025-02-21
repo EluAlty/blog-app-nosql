@@ -5,59 +5,39 @@
 </div>
 
 <div class="content">
-    {% if not is_admin %}
-    <div class="admin-auth">
-        <h2>Admin Authentication</h2>
-        <form method="POST" action="{{ url_for('admin_auth') }}">
-            <div class="form-group">
-                <label for="admin_password">Admin Password</label>
-                <input type="password" name="admin_password" id="admin_password" required>
+    <div class="section">
+        <h2 class="section-title">Users Management</h2>
+        <div class="users-list">
+            {% for user in users %}
+            <div class="user-item">
+                <span>{{ user.username }}</span>
+                <button class="btn btn-delete" onclick="deleteUser('{{ user._id }}')">
+                    <i class="fas fa-trash"></i> Delete User
+                </button>
             </div>
-            <button type="submit" class="btn">Authenticate</button>
-        </form>
-    </div>
-    {% endif %}
-
-    {% if is_admin or session.username %}
-    <h2>Create New Post</h2>
-    <form method="POST" action="/admin">
-        <div class="form-group">
-            <label for="name">Post Title</label>
-            <input type="text" name="name" id="name" required>
-        </div>
-        
-        <div class="form-group">
-            <label for="image_url">Image URL</label>
-            <input type="url" name="image_url" id="image_url" placeholder="https://example.com/image.jpg">
-            <small>Insert direct link to image</small>
-        </div>
-        
-        <div class="form-group">
-            <label for="content">Content</label>
-            <textarea name="content" id="content" required></textarea>
-        </div>
-        
-        <button type="submit" class="btn">Create Post</button>
-    </form>
-
-    <h2>{% if is_admin %}All Posts{% else %}My Posts{% endif %}</h2>
-    {% for post in posts %}
-    <div class="product">
-        <h3>{{ post.name }}</h3>
-        <div class="post-meta">
-            <span>Author: {{ post.author }}</span>
-        </div>
-        <div class="admin-controls">
-            <a href="{{ url_for('edit', id=post._id) }}" class="btn">
-                <i class="fas fa-edit"></i> Edit
-            </a>
-            <a href="{{ url_for('delete', id=post._id) }}" class="btn btn-delete" 
-               onclick="return confirm('Are you sure you want to delete this post?')">
-                <i class="fas fa-trash"></i> Delete
-            </a>
+            {% endfor %}
         </div>
     </div>
-    {% endfor %}
-    {% endif %}
+
+    <div class="section">
+        <h2 class="section-title">All Posts</h2>
+        <div class="posts-list">
+            {% for post in posts %}
+            <div class="product">
+                <h3>{{ post.name }}</h3>
+                <div class="post-meta">
+                    <span><i class="far fa-user"></i> {{ post.author }}</span>
+                    <span><i class="far fa-calendar"></i> {{ post.created_at }}</span>
+                </div>
+                <div class="admin-controls">
+                    <a href="{{ url_for('delete', id=post._id) }}" class="btn btn-delete" 
+                       onclick="return confirm('Are you sure you want to delete this post?')">
+                        <i class="fas fa-trash"></i> Delete
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
 </div>
 {% endblock %}

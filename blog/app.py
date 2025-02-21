@@ -57,18 +57,12 @@ def admin_auth():
 
 @app.route('/admin')
 def admin():
-    if 'username' not in session:
-        return redirect(url_for('login'))
+    if not session.get('is_admin', False):
+        return redirect(url_for('index'))
     
-    is_admin = session.get('is_admin', False)
-    if is_admin:
-      
-        posts = list(product.find())
-    else:
-        
-        posts = list(product.find({'author': session['username']}))
-    
-    return render_template('admin.html', posts=posts, is_admin=is_admin)
+    posts = list(product.find())
+    users = list(user_log.find())
+    return render_template('admin.html', posts=posts, users=users)
 
 
 @app.route("/posts/<name>", methods=["GET"])
@@ -219,6 +213,34 @@ def add_comment(name):
     )
     
     return redirect(url_for('post', name=name))
+
+
+@app.route('/create', methods=['GET'])
+def create_page():
+    if 'username' not in session:
+        return redirect(url_for('login'))
+    
+    user_posts = list(product.find({'author': session['username']}))
+    return render_template('create.html', posts=user_posts)
+
+
+@app.route('/create_post', methods=['POST'])
+def create_post():
+    if 'username' not in session:
+        return redirect(url_for('login'))
+    
+    post = {
+        'name': request.form.get('name'),
+        'content': request.form.get('content'),
+        'image_url': request.form.get('image_url'),
+        'author': session['username'],
+        'created_at': datetime.now().strftime("%d.%m.%Y %H:%M"),
+        'likes': [],
+        'comments': []
+    }
+    
+    product.insert_one(post)
+    return redirect(url_for('create_page'))
 
 
 if __name__ == '__main__':
