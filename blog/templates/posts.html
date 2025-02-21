@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% block content %}
+<article class="full-post">
+    {% if post.image_url %}
+    <div class="image-container">
+        <img src="{{ post.image_url }}" alt="{{ post.name }}" class="product-image">
+    </div>
+    {% endif %}
+    
+    <h1>{{ post.name }}</h1>
+    
+    <div class="post-meta">
+        <i class="far fa-user"></i> {{ post.author if post.author else 'Anonymous' }}
+        <i class="far fa-calendar-alt"></i> {{ post.created_at if post.created_at else 'Date not specified' }}
+    </div>
+    
+    <div class="post-content">
+        {{ post.content }}
+    </div>
+    
+    <div class="post-interactions">
+        <form action="{{ url_for('like_post', post_id=post._id) }}" method="POST" class="like-form">
+            <button type="submit" class="like-button {% if session.username in post.likes %}liked{% endif %}">
+                <i class="{% if session.username in post.likes %}fas{% else %}far{% endif %} fa-heart"></i>
+                <span>{{ post.likes|length if post.likes else 0 }}</span>
+            </button>
+        </form>
+    </div>
+    
+    <div class="comments-section">
+        <h3>Comments ({{ post.comments|length if post.comments else 0 }})</h3>
+        
+        {% if session.username %}
+        <form class="comment-form" action="{{ url_for('add_comment', name=post.name) }}" method="POST">
+            <textarea name="comment" placeholder="Write a comment..." required></textarea>
+            <button type="submit" class="btn">Submit</button>
+        </form>
+        {% endif %}
+        
+        {% if post.comments %}
+            {% for comment in post.comments|reverse %}
+            <div class="comment">
+                <div class="comment-header">
+                    <strong>{{ comment.author }}</strong>
+                    <span class="comment-date">{{ comment.created_at }}</span>
+                </div>
+                <div class="comment-content">
+                    {{ comment.content }}
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <p class="no-comments">No comments yet</p>
+        {% endif %}
+    </div>
+</article>
+{% endblock %}

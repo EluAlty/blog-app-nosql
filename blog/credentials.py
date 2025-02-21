@@ -1,0 +1,1 @@
+uri="mongodb+srv://elualty:Rd3n17RMyfVraLur@cluster0.olsqf.mongodb.net/"

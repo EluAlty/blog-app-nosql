@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-inner">
+            <div class="container">
+                <div class="nav-collapse">
+                    <ul class="nav">
+                        <li><a href="{{ url_for('index') }}"><i class="fas fa-home"></i> Home</a></li>
+                        {% if 'username' in session %}
+                            <li><a href="{{ url_for('admin') }}"><i class="fas fa-user-shield"></i> Admin Panel</a></li>
+                            <li><a href="{{ url_for('logout') }}"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                            {% if request.endpoint == 'index' %}
+                                <li><a href="{{ url_for('admin') }}" class="create-post-btn"><i class="fas fa-plus"></i> Create Post</a></li>
+                                <li class="search-container">
+                                    <form action="{{ url_for('process') }}" method="post" class="search-form">
+                                        <input type="text" name="search_query" placeholder="Search..." required>
+                                        <button type="submit"><i class="fas fa-search"></i></button>
+                                    </form>
+                                </li>
+                            {% endif %}
+                        {% else %}
+                            <li><a href="{{ url_for('login') }}"><i class="fas fa-sign-in-alt"></i> Login</a></li>
+                            <li><a href="{{ url_for('signup') }}"><i class="fas fa-user-plus"></i> Sign Up</a></li>
+                        {% endif %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main-content">
+        {% block content %}{% endblock %}
+    </div>
+</body>
+</html>
+

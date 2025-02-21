@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+{% if 'username' in session %}
+    <div class="title">
+        <h1>Latest Posts</h1>
+    </div>
+    <div class="posts">
+        {% for product in product %}
+            <div class="product">
+                <div class="product-content">
+                    {% if product.image_url %}
+                    <div class="image-container">
+                        <img src="{{ product.image_url }}" 
+                             alt="{{ product.name }}" 
+                             class="product-image">
+                    </div>
+                    {% endif %}
+                    <div class="text-content">
+                        <h2><a href="{{ url_for('post', name=product.name) }}">{{ product.name }}</a></h2>
+                        <div class="post-meta">
+                            <i class="far fa-user"></i> {{ product.author if product.author else 'Anonymous' }}
+                            <i class="far fa-calendar-alt"></i> {{ product.created_at if product.created_at else 'Date not specified' }}
+                        </div>
+                        <p>{{ product.content[:200] }}{% if product.content|length > 200 %}...{% endif %}</p>
+                        <a href="{{ url_for('post', name=product.name) }}" class="read-more">Read more →</a>
+                    </div>
+                    <div class="post-interactions">
+                        <div class="like-button">
+                            <i class="{% if session.username in product.likes %}fas{% else %}far{% endif %} fa-heart"></i>
+                            {{ product.likes|length if product.likes else 0 }}
+                        </div>
+                        <div class="comment-button">
+                            <i class="far fa-comment"></i>
+                            {{ product.comments|length if product.comments else 0 }}
+                        </div>
+                    </div>
+                    {% if product.comments %}
+                    <div class="comments-section">
+                        {% for comment in product.comments[:3] %}
+                        <div class="comment">
+                            <strong>{{ comment.author }}</strong>: {{ comment.content }}
+                        </div>
+                        {% endfor %}
+                        {% if product.comments|length > 3 %}
+                        <div class="show-more-comments">
+                            Show all comments ({{ product.comments|length }})
+                        </div>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="login-required">
+        <h2><i class="fas fa-lock"></i> Authentication Required</h2>
+        <p>Please login or register to view posts.</p>
+        <div class="auth-buttons">
+            <a href="/login" class="btn btn-primary">Login</a>
+            <a href="/signup" class="btn btn-secondary">Sign Up</a>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}
+
